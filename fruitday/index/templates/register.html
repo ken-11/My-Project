@@ -1,0 +1,80 @@
+{%extends 'login.html'%}
+{%load static%}
+
+{%block js%}
+  <script src="{%static 'js/register.js'%}"></script>
+{%endblock%}
+
+{%block title%}
+  注册会员
+{%endblock%}
+
+{%block anchor%}
+  <a href="{%url 'login'%}">会员登录&gt;</a>
+{%endblock%}
+
+
+{%block form%}
+  <!-- 判断 errMsg 中是否有错误数据 -->
+  {%if errMsg%}
+    <!-- <script>
+      alert('{{errMsg}}');
+    </script> -->
+  {%endif%}
+  <form id='formReg' action="{%url 'register'%}" method="post">
+    <!-- 增加 csrf 验证 -->
+    {%csrf_token%}
+    <!-- 第一行 ：手机号 -->
+    <div class="form-line">
+      <p>手机号</p>
+      <div>
+        <input type="text" name="uphone" class="form-control">
+        <p>{{errMsg}}</p>
+      </div>
+    </div>
+    <!-- 第二行 ：密码 -->
+    <div class="form-line">
+      <p>密码</p>
+      <div>
+        <input type="password" name="upwd" class="form-control" id="upwd">
+      </div>
+    </div>
+    <!-- 第三行 ：确认密码 -->
+    <div class="form-line">
+      <p>确认密码</p>
+      <div>
+        <input type="password" name="cpwd" class="form-control" id="cpwd">
+      </div>
+    </div>
+    <!-- 第四行 ：用户名 -->
+    <div class="form-line">
+      <p>用户名</p>
+      <div>
+        <input type="text" name="uname" class="form-control">
+      </div>
+    </div>
+    <!-- 第五行 ：邮箱 -->
+    <div class="form-line">
+      <p>邮箱</p>
+      <div>
+        <input type="email" name="uemail" class="form-control">
+      </div>
+    </div>
+    <!-- 第六行 ：注册 & 会员登录 -->
+    <div class="form-line">
+      <p></p>
+      <div>
+        <a href="{%url 'login'%}" class="register">会员登录</a>
+        <input type="submit" value="注册" class="btnLogin">
+      </div>
+    </div>
+  </form>
+{%endblock%}
+
+{%block style%}
+  <style>
+    #login{
+      margin-top:10px;
+    }
+  </style>
+{%endblock%}
