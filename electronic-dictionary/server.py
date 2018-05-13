@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from __future__ import unicode_literals
 # coding=utf-8
 
 from signal import *
@@ -7,9 +8,7 @@ import pymysql
 from time import *
 import sys
 import os
-from pymongo import MongoClient
-
-DICT_TEXT = "./dict.txt"
+from youdaoTest import query
 
 
 def do_child(connfd, db):
@@ -91,28 +90,18 @@ def do_login(connfd, msg, db):
 
 def do_query(connfd, msg, db):
     print("in query.......")
+    start = time()
     cursor = db.cursor()
     s = msg.split(' ')
     words = s[1]
     name = s[2]
-    try:
-        client = MongoClient('localhost', 27017)
-        db_obj = client.stu
-        data = db_obj.class9.find()
-    except Exception as e:
-        print(e)
-        connfd.send('FALL'.encode())
-    connfd.send('OK'.encode())
-    sleep(0.1)
-    msg = ' '
-    for i in data:
-        if i['word'] == words:
-            for j in i[str(words)]:
-                if j:
-                    msg += j+' '
+    msg = query(words)
     connfd.send(msg.encode())
     insert_history(db, words, name)
     client.close()
+    end = time()
+    times = end - start
+    print(times)
 
 
 def do_history(connfd, msg, db):
