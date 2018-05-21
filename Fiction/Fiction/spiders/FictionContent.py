@@ -22,7 +22,6 @@ class FictioncontentSpider(scrapy.Spider):
         pattern = re.compile(
             '<td width="30">([\s\S]*?)</td><td width="60">[\s\S]*?target="_blank">([\s\S]*?)</a></td><td><a class="red" href="([\s\S]*?)" title="([\s\S]*?)" target="_blank">[\s\S]*?</td>[\s\S]*?</td><td>([\s\S]*?)</td><td>[\s\S]*?" title="([\s\S]*?)"[\s\S]*?<td width="30">')
         data = re.findall(pattern, response.body.decode('utf-8'))
-        # print(data)
         for item in data:
             top = item[0]
             url = item[2]
@@ -30,7 +29,6 @@ class FictioncontentSpider(scrapy.Spider):
             name = item[3]
             update_time = item[4]
             author = item[5]
-
             # 存入items容器中
             item = FictionItem()
             item['top'] = top
